@@ -11,7 +11,7 @@ import { Type } from "./data/type";
 import { Stat } from "./data/pokemon-stat";
 import { PokeballCounts } from "./battle-scene";
 import { PokeballType } from "./data/pokeball";
-import {TimeOfDay} from "#app/data/enums/time-of-day";
+import { TimeOfDay } from "#app/data/enums/time-of-day";
 import { Gender } from "./data/gender";
 import { StatusEffect } from "./data/status-effect";
 import { modifierTypes } from "./modifier/modifier-type";
@@ -27,7 +27,7 @@ import { modifierTypes } from "./modifier/modifier-type";
 
 // a specific seed (default: a random string of 24 characters)
 export const SEED_OVERRIDE: string = "";
-export const WEATHER_OVERRIDE: WeatherType = WeatherType.NONE;
+export const WEATHER_OVERRIDE: WeatherType = 0;
 export const DOUBLE_BATTLE_OVERRIDE: boolean = false;
 export const SINGLE_BATTLE_OVERRIDE: boolean = false;
 export const STARTING_WAVE_OVERRIDE: integer = 0;
@@ -102,9 +102,9 @@ export const OPP_VARIANT_OVERRIDE: Variant = 0;
  * - BerryType is for BERRY
  */
 interface ModifierOverride {
-    name: keyof typeof modifierTypes & string,
-    count?: integer
-    type?: TempBattleStat|Stat|Nature|Type|BerryType
+  name: keyof typeof modifierTypes & string,
+  count?: integer
+  type?: TempBattleStat | Stat | Nature | Type | BerryType
 }
 export const STARTING_MODIFIER_OVERRIDE: Array<ModifierOverride> = [];
 export const OPP_MODIFIER_OVERRIDE: Array<ModifierOverride> = [];

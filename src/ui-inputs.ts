@@ -1,11 +1,11 @@
 import Phaser from "phaser";
-import {Mode} from "./ui/ui";
-import {InputsController} from "./inputs-controller";
+import { Mode } from "./ui/ui";
+import { InputsController } from "./inputs-controller";
 import MessageUiHandler from "./ui/message-ui-handler";
 import StarterSelectUiHandler from "./ui/starter-select-ui-handler";
-import {Setting, SettingKeys, settingIndex} from "./system/settings/settings";
+import { Setting, SettingKeys, settingIndex } from "./system/settings/settings";
 import SettingsUiHandler from "./ui/settings/settings-ui-handler";
-import {Button} from "./enums/buttons";
+import { Button } from "./enums/buttons";
 import SettingsGamepadUiHandler from "./ui/settings/settings-gamepad-ui-handler";
 import SettingsKeyboardUiHandler from "#app/ui/settings/settings-keyboard-ui-handler";
 import BattleScene from "./battle-scene";
@@ -56,46 +56,46 @@ export class UiInputs {
 
   getActionsKeyDown(): ActionKeys {
     const actions: ActionKeys = {
-      [Button.UP]:              () => this.buttonDirection(Button.UP),
-      [Button.DOWN]:            () => this.buttonDirection(Button.DOWN),
-      [Button.LEFT]:            () => this.buttonDirection(Button.LEFT),
-      [Button.RIGHT]:           () => this.buttonDirection(Button.RIGHT),
-      [Button.SUBMIT]:          () => this.buttonTouch(),
-      [Button.ACTION]:          () => this.buttonAb(Button.ACTION),
-      [Button.CANCEL]:          () => this.buttonAb(Button.CANCEL),
-      [Button.MENU]:            () => this.buttonMenu(),
-      [Button.STATS]:           () => this.buttonStats(true),
-      [Button.CYCLE_SHINY]:     () => this.buttonCycleOption(Button.CYCLE_SHINY),
-      [Button.CYCLE_FORM]:      () => this.buttonCycleOption(Button.CYCLE_FORM),
-      [Button.CYCLE_GENDER]:    () => this.buttonCycleOption(Button.CYCLE_GENDER),
-      [Button.CYCLE_ABILITY]:   () => this.buttonCycleOption(Button.CYCLE_ABILITY),
-      [Button.CYCLE_NATURE]:    () => this.buttonCycleOption(Button.CYCLE_NATURE),
-      [Button.V]:               () => this.buttonCycleOption(Button.V),
-      [Button.SPEED_UP]:        () => this.buttonSpeedChange(),
-      [Button.SLOW_DOWN]:       () => this.buttonSpeedChange(false),
+      [Button.UP]: () => this.buttonDirection(Button.UP),
+      [Button.DOWN]: () => this.buttonDirection(Button.DOWN),
+      [Button.LEFT]: () => this.buttonDirection(Button.LEFT),
+      [Button.RIGHT]: () => this.buttonDirection(Button.RIGHT),
+      [Button.SUBMIT]: () => this.buttonTouch(),
+      [Button.ACTION]: () => this.buttonAb(Button.ACTION),
+      [Button.CANCEL]: () => this.buttonAb(Button.CANCEL),
+      [Button.MENU]: () => this.buttonMenu(),
+      [Button.STATS]: () => this.buttonStats(true),
+      [Button.CYCLE_SHINY]: () => this.buttonCycleOption(Button.CYCLE_SHINY),
+      [Button.CYCLE_FORM]: () => this.buttonCycleOption(Button.CYCLE_FORM),
+      [Button.CYCLE_GENDER]: () => this.buttonCycleOption(Button.CYCLE_GENDER),
+      [Button.CYCLE_ABILITY]: () => this.buttonCycleOption(Button.CYCLE_ABILITY),
+      [Button.CYCLE_NATURE]: () => this.buttonCycleOption(Button.CYCLE_NATURE),
+      [Button.V]: () => this.buttonCycleOption(Button.V),
+      [Button.SPEED_UP]: () => this.buttonSpeedChange(),
+      [Button.SLOW_DOWN]: () => this.buttonSpeedChange(false),
     };
     return actions;
   }
 
   getActionsKeyUp(): ActionKeys {
     const actions: ActionKeys = {
-      [Button.UP]:              () => undefined,
-      [Button.DOWN]:            () => undefined,
-      [Button.LEFT]:            () => undefined,
-      [Button.RIGHT]:           () => undefined,
-      [Button.SUBMIT]:          () => undefined,
-      [Button.ACTION]:          () => undefined,
-      [Button.CANCEL]:          () => undefined,
-      [Button.MENU]:            () => undefined,
-      [Button.STATS]:           () => this.buttonStats(false),
-      [Button.CYCLE_SHINY]:     () => undefined,
-      [Button.CYCLE_FORM]:      () => undefined,
-      [Button.CYCLE_GENDER]:    () => undefined,
-      [Button.CYCLE_ABILITY]:   () => undefined,
-      [Button.CYCLE_NATURE]:    () => undefined,
-      [Button.V]:               () => this.buttonInfo(false),
-      [Button.SPEED_UP]:        () => undefined,
-      [Button.SLOW_DOWN]:       () => undefined,
+      [Button.UP]: () => undefined,
+      [Button.DOWN]: () => undefined,
+      [Button.LEFT]: () => undefined,
+      [Button.RIGHT]: () => undefined,
+      [Button.SUBMIT]: () => undefined,
+      [Button.ACTION]: () => undefined,
+      [Button.CANCEL]: () => undefined,
+      [Button.MENU]: () => undefined,
+      [Button.STATS]: () => this.buttonStats(false),
+      [Button.CYCLE_SHINY]: () => undefined,
+      [Button.CYCLE_FORM]: () => undefined,
+      [Button.CYCLE_GENDER]: () => undefined,
+      [Button.CYCLE_ABILITY]: () => this.buttonTypeEffectiveness(false),
+      [Button.CYCLE_NATURE]: () => undefined,
+      [Button.V]: () => this.buttonInfo(false),
+      [Button.SPEED_UP]: () => undefined,
+      [Button.SLOW_DOWN]: () => undefined,
     };
     return actions;
   }
@@ -125,7 +125,7 @@ export class UiInputs {
     }
   }
   buttonInfo(pressed: boolean = true): void {
-    if (this.scene.showMovesetFlyout ) {
+    if (this.scene.showMovesetFlyout) {
       for (const p of this.scene.getField().filter(p => p?.isActive(true))) {
         p.toggleFlyout(pressed);
       }
@@ -136,36 +136,46 @@ export class UiInputs {
     }
   }
 
+  buttonTypeEffectiveness(pressed: boolean = true): void {
+    if (!this.scene.showTypeEffectivenessFlyout) {
+      return;
+    }
+
+    for (const p of this.scene.getField().filter(p => p?.isActive(true))) {
+      p.toggleTypeEffectivenessFlyout(pressed);
+    }
+  }
+
   buttonMenu(): void {
     if (this.scene.disableMenu) {
       return;
     }
     switch (this.scene.ui?.getMode()) {
-    case Mode.MESSAGE:
-      if (!(this.scene.ui.getHandler() as MessageUiHandler).pendingPrompt) {
+      case Mode.MESSAGE:
+        if (!(this.scene.ui.getHandler() as MessageUiHandler).pendingPrompt) {
+          return;
+        }
+      case Mode.TITLE:
+      case Mode.COMMAND:
+      case Mode.FIGHT:
+      case Mode.BALL:
+      case Mode.TARGET_SELECT:
+      case Mode.SAVE_SLOT:
+      case Mode.PARTY:
+      case Mode.SUMMARY:
+      case Mode.STARTER_SELECT:
+      case Mode.OPTION_SELECT:
+        this.scene.ui.setOverlayMode(Mode.MENU);
+        break;
+      case Mode.CONFIRM:
+      case Mode.MENU:
+      case Mode.SETTINGS:
+      case Mode.ACHIEVEMENTS:
+        this.scene.ui.revertMode();
+        this.scene.playSound("select");
+        break;
+      default:
         return;
-      }
-    case Mode.TITLE:
-    case Mode.COMMAND:
-    case Mode.FIGHT:
-    case Mode.BALL:
-    case Mode.TARGET_SELECT:
-    case Mode.SAVE_SLOT:
-    case Mode.PARTY:
-    case Mode.SUMMARY:
-    case Mode.STARTER_SELECT:
-    case Mode.OPTION_SELECT:
-      this.scene.ui.setOverlayMode(Mode.MENU);
-      break;
-    case Mode.CONFIRM:
-    case Mode.MENU:
-    case Mode.SETTINGS:
-    case Mode.ACHIEVEMENTS:
-      this.scene.ui.revertMode();
-      this.scene.playSound("select");
-      break;
-    default:
-      return;
     }
   }
 
@@ -176,6 +186,8 @@ export class UiInputs {
       this.scene.ui.processInput(button);
     } else if (button === Button.V) {
       this.buttonInfo(true);
+    } else if (button === Button.CYCLE_ABILITY) {
+      this.buttonTypeEffectiveness(true);
     }
   }
 
