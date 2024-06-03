@@ -9,8 +9,9 @@ import { Type, getTypeRgb } from "../data/type";
 import { getVariantTint } from "#app/data/variant";
 import { BattleStat } from "#app/data/battle-stat";
 import BattleFlyout from "./battle-flyout";
+import TypeEffectivenessFlyout from "./type-effectiveness-flyout";
 
-const battleStatOrder = [ BattleStat.ATK, BattleStat.DEF, BattleStat.SPATK, BattleStat.SPDEF, BattleStat.ACC, BattleStat.EVA, BattleStat.SPD ];
+const battleStatOrder = [BattleStat.ATK, BattleStat.DEF, BattleStat.SPATK, BattleStat.SPDEF, BattleStat.ACC, BattleStat.EVA, BattleStat.SPD];
 
 export default class BattleInfo extends Phaser.GameObjects.Container {
   private baseY: number;
@@ -60,6 +61,7 @@ export default class BattleInfo extends Phaser.GameObjects.Container {
   private statNumbers: Phaser.GameObjects.Sprite[];
 
   public flyoutMenu: BattleFlyout;
+  public flyoutTypeEffectivenessMenu: TypeEffectivenessFlyout;
 
   constructor(scene: Phaser.Scene, x: number, y: number, player: boolean) {
     super(scene, x, y);
@@ -234,6 +236,10 @@ export default class BattleInfo extends Phaser.GameObjects.Container {
       this.add(this.flyoutMenu);
 
       this.moveBelow<Phaser.GameObjects.GameObject>(this.flyoutMenu, this.box);
+
+      this.flyoutTypeEffectivenessMenu = new TypeEffectivenessFlyout(this.scene, this.player);
+      this.add(this.flyoutTypeEffectivenessMenu);
+      this.moveBelow<Phaser.GameObjects.GameObject>(this.flyoutTypeEffectivenessMenu, this.box);
     }
 
     this.type1Icon = this.scene.add.sprite(player ? -139 : -15, player ? -17 : -15.5, `pbinfo_${player ? "player" : "enemy"}_type1`);
@@ -260,6 +266,7 @@ export default class BattleInfo extends Phaser.GameObjects.Container {
     this.box.name = pokemon.name;
 
     this.flyoutMenu?.initInfo(pokemon);
+    this.flyoutTypeEffectivenessMenu?.initInfo(pokemon);
 
     this.genderText.setText(getGenderSymbol(pokemon.gender));
     this.genderText.setColor(getGenderColor(pokemon.gender));
@@ -398,10 +405,10 @@ export default class BattleInfo extends Phaser.GameObjects.Container {
       this.baseY = this.y;
     }
 
-    const offsetElements = [ this.nameText, this.genderText, this.teraIcon, this.splicedIcon, this.shinyIcon, this.statusIndicator, this.levelContainer ];
+    const offsetElements = [this.nameText, this.genderText, this.teraIcon, this.splicedIcon, this.shinyIcon, this.statusIndicator, this.levelContainer];
     offsetElements.forEach(el => el.y += 1.5 * (mini ? -1 : 1));
 
-    [ this.type1Icon, this.type2Icon, this.type3Icon ].forEach(el => {
+    [this.type1Icon, this.type2Icon, this.type3Icon].forEach(el => {
       el.x += 4 * (mini ? 1 : -1);
       el.y += -8 * (mini ? 1 : -1);
     });
@@ -409,7 +416,7 @@ export default class BattleInfo extends Phaser.GameObjects.Container {
     this.statValuesContainer.x += 2 * (mini ? 1 : -1);
     this.statValuesContainer.y += -7 * (mini ? 1 : -1);
 
-    const toggledElements = [ this.hpNumbersContainer, this.expBar ];
+    const toggledElements = [this.hpNumbersContainer, this.expBar];
     toggledElements.forEach(el => el.setVisible(!mini));
   }
 
@@ -428,7 +435,7 @@ export default class BattleInfo extends Phaser.GameObjects.Container {
     if (boss !== this.boss) {
       this.boss = boss;
 
-      [ this.nameText, this.genderText, this.teraIcon, this.splicedIcon, this.shinyIcon, this.ownedIcon, this.championRibbon, this.statusIndicator, this.levelContainer, this.statValuesContainer ].map(e => e.x += 48 * (boss ? -1 : 1));
+      [this.nameText, this.genderText, this.teraIcon, this.splicedIcon, this.shinyIcon, this.ownedIcon, this.championRibbon, this.statusIndicator, this.levelContainer, this.statValuesContainer].map(e => e.x += 48 * (boss ? -1 : 1));
       this.hpBar.x += 38 * (boss ? -1 : 1);
       this.hpBar.y += 2 * (this.boss ? -1 : 1);
       this.hpBar.setTexture(`overlay_hp${boss ? "_boss" : ""}`);
@@ -449,7 +456,7 @@ export default class BattleInfo extends Phaser.GameObjects.Container {
       const uiTheme = (this.scene as BattleScene).uiTheme;
       const maxHp = pokemon.getMaxHp();
       for (let s = 1; s < this.bossSegments; s++) {
-        const dividerX = (Math.round((maxHp / this.bossSegments) * s) /  maxHp) * this.hpBar.width;
+        const dividerX = (Math.round((maxHp / this.bossSegments) * s) / maxHp) * this.hpBar.width;
         const divider = this.scene.add.rectangle(0, 0, 1, this.hpBar.height - (uiTheme ? 0 : 1), pokemon.bossSegmentIndex >= s ? 0xFFFFFF : 0x404040);
         divider.setOrigin(0.5, 0);
         divider.setName("hpBar_divider_" + s.toString());
