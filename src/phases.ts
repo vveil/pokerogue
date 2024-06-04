@@ -61,7 +61,7 @@ import { Abilities } from "./data/enums/abilities";
 import * as Overrides from "./overrides";
 import { TextStyle, addTextObject } from "./ui/text";
 import { Type } from "./data/type";
-import { MoveUsedEvent, TurnEndEvent, TurnInitEvent } from "./battle-scene-events";
+import { MoveUsedEvent, TurnEndEvent, TurnInitEvent, PostSummonPhaseEvent } from "./battle-scene-events";
 
 
 export class LoginPhase extends Phase {
@@ -1124,6 +1124,9 @@ export class PostSummonPhase extends PokemonPhase {
 
   start() {
     super.start();
+
+    /** Triggeres the {@linkcode BattleSceneEventType.POST_SUMMON_PHASE} for the Type Effectiveness UI */
+    this.scene.eventTarget.dispatchEvent(new PostSummonPhaseEvent());
 
     const pokemon = this.getPokemon();
 
