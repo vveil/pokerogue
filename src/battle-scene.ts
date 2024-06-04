@@ -264,6 +264,7 @@ export default class BattleScene extends SceneBase {
    * - {@linkcode BattleSceneEventType.TURN_INIT} {@linkcode TurnInitEvent}
    * - {@linkcode BattleSceneEventType.TURN_END} {@linkcode TurnEndEvent}
    * - {@linkcode BattleSceneEventType.NEW_ARENA} {@linkcode NewArenaEvent}
+   * - {@linkcode BattleSceneEventType.POST_SUMMON_PHASE} {@linkcode PostSummonPhaseEvent}
    */
   public readonly eventTarget: EventTarget = new EventTarget();
 

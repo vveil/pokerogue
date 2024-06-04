@@ -41,6 +41,11 @@ export enum BattleSceneEventType {
    * @see {@linkcode NewArenaEvent}
    */
   NEW_ARENA = "onNewArena",
+  /**
+   * Triggers when the Summon Phase begins
+   * @see {@linkcode PostSummonPhaseEvent}
+   */
+  POST_SUMMON_PHASE = "onPostSummonPhase",
 }
 
 /**
@@ -128,5 +133,14 @@ export class TurnEndEvent extends Event {
 export class NewArenaEvent extends Event {
   constructor() {
     super(BattleSceneEventType.NEW_ARENA);
+  }
+}
+/**
+ * Container class for {@linkcode BattleSceneEventType.POST_SUMMON_PHASE} events
+ * @extends Event
+*/
+export class PostSummonPhaseEvent extends Event {
+  constructor() {
+    super(BattleSceneEventType.POST_SUMMON_PHASE);
   }
 }

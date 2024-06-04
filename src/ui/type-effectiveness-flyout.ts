@@ -45,9 +45,8 @@ export default class TypeEffectivenessFlyout extends Phaser.GameObjects.Containe
   /** Has the typeEffectiveness flyout been filled with the types? */
   private typeEffectivenessFilled: boolean = false;
 
-
-
-  private readonly onTurnInit = (event) => this.updateTypeEffectiveness(event);
+  /** Initialize the Type Effectiveness UI */
+  private readonly onPostSummonPhaseStart = (event) => this.initTypeEffectiveness(event);
 
   constructor(scene: Phaser.Scene, player: boolean) {
     super(scene, 0, 0);
@@ -75,7 +74,7 @@ export default class TypeEffectivenessFlyout extends Phaser.GameObjects.Containe
   }
 
   /**
-   * Links the given {@linkcode Pokemon} and subscribes to the {@linkcode BattleSceneEventType.MOVE_USED} event
+   * Links the given {@linkcode Pokemon} and subscribes to the {@linkcode BattleSceneEventType.POST_SUMMON_PHASE} event
    * @param pokemon {@linkcode Pokemon} to link to this flyout
    */
   initInfo(pokemon: Pokemon) {
@@ -84,7 +83,7 @@ export default class TypeEffectivenessFlyout extends Phaser.GameObjects.Containe
     this.name = `Flyout ${this.pokemon.name}`;
     this.flyoutParent.name = `Flyout Parent ${this.pokemon.name}`;
 
-    this.battleScene.eventTarget.addEventListener(BattleSceneEventType.TURN_INIT, this.onTurnInit);
+    this.battleScene.eventTarget.addEventListener(BattleSceneEventType.POST_SUMMON_PHASE, this.onPostSummonPhaseStart);
   }
 
   /** Sets and formats the text property for all {@linkcode Phaser.GameObjects.Text} in the flyoutText array */
@@ -119,8 +118,8 @@ export default class TypeEffectivenessFlyout extends Phaser.GameObjects.Containe
     this.typeEffectivenessFilled = true;
   }
 
-  /** Updates all of the {@linkcode MoveInfo} objects in the moveInfo array */
-  updateTypeEffectiveness(event: Event) {
+  /** Initialize the Type Effectiveness UI */
+  initTypeEffectiveness(event: Event) {
     if (this.typeEffectivenessFilled) {
       return;
     }
@@ -174,7 +173,7 @@ export default class TypeEffectivenessFlyout extends Phaser.GameObjects.Containe
   }
 
   destroy(fromScene?: boolean): void {
-    this.battleScene.eventTarget.removeEventListener(BattleSceneEventType.TURN_INIT, this.onTurnInit);
+    this.battleScene.eventTarget.removeEventListener(BattleSceneEventType.POST_SUMMON_PHASE, this.onPostSummonPhaseStart);
 
     super.destroy();
   }
