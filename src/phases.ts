@@ -62,7 +62,7 @@ import { Abilities } from "./data/enums/abilities";
 import * as Overrides from "./overrides";
 import { TextStyle, addTextObject } from "./ui/text";
 import { Type } from "./data/type";
-import { BerryUsedEvent, EncounterPhaseEvent, MoveUsedEvent, TurnEndEvent, TurnInitEvent, PostSummonPhaseEvent } from "./battle-scene-events";
+import { BerryUsedEvent, EncounterPhaseEvent, MoveUsedEvent, TurnEndEvent, TurnInitEvent, PokemonSummonedEvent } from "./battle-scene-events";
 import { ExpNotification } from "./enums/exp-notification";
 
 
@@ -1156,8 +1156,8 @@ export class PostSummonPhase extends PokemonPhase {
   start() {
     super.start();
 
-    /** Triggeres the {@linkcode BattleSceneEventType.POST_SUMMON_PHASE} for the Type Effectiveness UI */
-    this.scene.eventTarget.dispatchEvent(new PostSummonPhaseEvent());
+    /** Triggeres the {@linkcode BattleSceneEventType.POKEMON_SUMMONED} for the Type Effectiveness UI */
+    this.scene.eventTarget.dispatchEvent(new PokemonSummonedEvent());
 
     const pokemon = this.getPokemon();
 

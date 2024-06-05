@@ -46,7 +46,7 @@ export default class TypeEffectivenessFlyout extends Phaser.GameObjects.Containe
   private typeEffectivenessFilled: boolean = false;
 
   /** Initialize the Type Effectiveness UI */
-  private readonly onPostSummonPhaseStart = (event) => this.initTypeEffectiveness(event);
+  private readonly onPokemoneSummoned = (event) => this.initTypeEffectiveness(event);
 
   constructor(scene: Phaser.Scene, player: boolean) {
     super(scene, 0, 0);
@@ -74,7 +74,7 @@ export default class TypeEffectivenessFlyout extends Phaser.GameObjects.Containe
   }
 
   /**
-   * Links the given {@linkcode Pokemon} and subscribes to the {@linkcode BattleSceneEventType.POST_SUMMON_PHASE} event
+   * Links the given {@linkcode Pokemon} and subscribes to the {@linkcode BattleSceneEventType.POKEMON_SUMMONED} event
    * @param pokemon {@linkcode Pokemon} to link to this flyout
    */
   initInfo(pokemon: Pokemon) {
@@ -83,7 +83,7 @@ export default class TypeEffectivenessFlyout extends Phaser.GameObjects.Containe
     this.name = `Flyout ${this.pokemon.name}`;
     this.flyoutParent.name = `Flyout Parent ${this.pokemon.name}`;
 
-    this.battleScene.eventTarget.addEventListener(BattleSceneEventType.POST_SUMMON_PHASE, this.onPostSummonPhaseStart);
+    this.battleScene.eventTarget.addEventListener(BattleSceneEventType.POKEMON_SUMMONED, this.onPokemoneSummoned);
   }
 
   /** Sets and formats the text property for all {@linkcode Phaser.GameObjects.Text} in the flyoutText array */
@@ -123,6 +123,7 @@ export default class TypeEffectivenessFlyout extends Phaser.GameObjects.Containe
     if (this.typeEffectivenessFilled) {
       return;
     }
+
     // TODO Stellar
     const types = Object.values(Type).slice(0, 18);
     types.map(atkType => {
@@ -173,7 +174,7 @@ export default class TypeEffectivenessFlyout extends Phaser.GameObjects.Containe
   }
 
   destroy(fromScene?: boolean): void {
-    this.battleScene.eventTarget.removeEventListener(BattleSceneEventType.POST_SUMMON_PHASE, this.onPostSummonPhaseStart);
+    this.battleScene.eventTarget.removeEventListener(BattleSceneEventType.POKEMON_SUMMONED, this.onPokemoneSummoned);
 
     super.destroy();
   }
