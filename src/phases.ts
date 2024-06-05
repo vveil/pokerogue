@@ -1313,6 +1313,9 @@ export class SummonPhase extends PartyMemberPokemonPhase {
   start() {
     super.start();
 
+    /** Triggeres the {@linkcode BattleSceneEventType.POKEMON_SUMMONED} for the Type Effectiveness UI */
+    this.scene.eventTarget.dispatchEvent(new PokemonSummonedEvent());
+
     this.preSummon();
   }
 
