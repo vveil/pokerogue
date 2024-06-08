@@ -74,26 +74,18 @@ const expSpriteKeys: string[] = [];
 
 export let starterColors: StarterColors;
 interface StarterColors {
-<<<<<<< HEAD
-    [key: string]: [string, string]
-}
-
-export interface PokeballCounts {
-    [pb: string]: integer;
-=======
   [key: string]: [string, string]
 }
 
 export interface PokeballCounts {
   [pb: string]: integer;
->>>>>>> 593b04a71a (added typeeffectiveness flyout mod)
 }
 
 export type AnySound = Phaser.Sound.WebAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.NoAudioSound;
 
 export interface InfoToggle {
-    toggleInfo(force?: boolean): void;
-    isActive(): boolean;
+  toggleInfo(force?: boolean): void;
+  isActive(): boolean;
 }
 
 export default class BattleScene extends SceneBase {
@@ -110,13 +102,10 @@ export default class BattleScene extends SceneBase {
   public damageNumbersMode: integer = 0;
   public reroll: boolean = false;
   public showMovesetFlyout: boolean = true;
-<<<<<<< HEAD
   public showArenaFlyout: boolean = true;
   public showTimeOfDayWidget: boolean = true;
   public timeOfDayAnimation: EaseType = EaseType.NONE;
-=======
   public showTypeEffectivenessFlyout: boolean = true;
->>>>>>> 593b04a71a (added typeeffectiveness flyout mod)
   public showLevelUpStats: boolean = true;
   public enableTutorials: boolean = import.meta.env.VITE_BYPASS_TUTORIAL === "1";
   public enableMoveInfo: boolean = true;
@@ -144,7 +133,6 @@ export default class BattleScene extends SceneBase {
   public skipSeenDialogues: boolean = false;
 
   /**
-<<<<<<< HEAD
      * Defines the experience gain display mode.
      *
      * @remarks
@@ -157,20 +145,6 @@ export default class BattleScene extends SceneBase {
      * @default 0 - Uses the default normal experience gain display.
      */
   public expParty: ExpNotification = 0;
-=======
-   * Defines the experience gain display mode.
-   *
-   * @remarks
-   * The `expParty` can have several modes:
-   * - `0` - Default: The normal experience gain display, nothing changed.
-   * - `1` - Level Up Notification: Displays the level up in the small frame instead of a message.
-   * - `2` - Skip: No level up frame nor message.
-   *
-   * Modes `1` and `2` are still compatible with stats display, level up, new move, etc.
-   * @default 0 - Uses the default normal experience gain display.
-   */
-  public expParty: integer = 0;
->>>>>>> 593b04a71a (added typeeffectiveness flyout mod)
   public hpBarSpeed: integer = 0;
   public fusionPaletteSwaps: boolean = true;
   public enableTouchControls: boolean = false;
@@ -654,27 +628,6 @@ export default class BattleScene extends SceneBase {
 
         /*const loadPokemonAssets: Promise<void>[] = [];
 
-<<<<<<< HEAD
-                for (let s of Object.keys(speciesStarters)) {
-                    const species = getPokemonSpecies(parseInt(s));
-                    loadPokemonAssets.push(species.loadAssets(this, false, 0, false));
-                }
-
-                Promise.all(loadPokemonAssets).then(() => {
-                    const starterCandyColors = {};
-                    const rgbaToHexFunc = (r, g, b) => [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
-
-                    for (let s of Object.keys(speciesStarters)) {
-                        const species = getPokemonSpecies(parseInt(s));
-
-                        starterCandyColors[species.speciesId] = species.generateCandyColors(this).map(c => rgbaToHexFunc(c[0], c[1], c[2]));
-                    }
-
-                    console.log(JSON.stringify(starterCandyColors));
-
-                    resolve();
-                });*/
-=======
         for (let s of Object.keys(speciesStarters)) {
           const species = getPokemonSpecies(parseInt(s));
           loadPokemonAssets.push(species.loadAssets(this, false, 0, false));
@@ -694,7 +647,6 @@ export default class BattleScene extends SceneBase {
 
           resolve();
         });*/
->>>>>>> 593b04a71a (added typeeffectiveness flyout mod)
 
         resolve();
       });
@@ -1194,62 +1146,62 @@ export default class BattleScene extends SceneBase {
     }
 
     switch (species.speciesId) {
-    case Species.UNOWN:
-    case Species.SHELLOS:
-    case Species.GASTRODON:
-    case Species.BASCULIN:
-    case Species.DEERLING:
-    case Species.SAWSBUCK:
-    case Species.FROAKIE:
-    case Species.FROGADIER:
-    case Species.SCATTERBUG:
-    case Species.SPEWPA:
-    case Species.VIVILLON:
-    case Species.FLABEBE:
-    case Species.FLOETTE:
-    case Species.FLORGES:
-    case Species.FURFROU:
-    case Species.PUMPKABOO:
-    case Species.GOURGEIST:
-    case Species.ORICORIO:
-    case Species.MAGEARNA:
-    case Species.ZARUDE:
-    case Species.SQUAWKABILLY:
-    case Species.TATSUGIRI:
-    case Species.PALDEA_TAUROS:
-      return Utils.randSeedInt(species.forms.length);
-    case Species.PIKACHU:
-      return Utils.randSeedInt(8);
-    case Species.EEVEE:
-      return Utils.randSeedInt(2);
-    case Species.GRENINJA:
-      return Utils.randSeedInt(2);
-    case Species.ZYGARDE:
-      return Utils.randSeedInt(3);
-    case Species.MINIOR:
-      return Utils.randSeedInt(6);
-    case Species.ALCREMIE:
-      return Utils.randSeedInt(9);
-    case Species.MEOWSTIC:
-    case Species.INDEEDEE:
-    case Species.BASCULEGION:
-    case Species.OINKOLOGNE:
-      return gender === Gender.FEMALE ? 1 : 0;
-    case Species.TOXTRICITY:
-      const lowkeyNatures = [Nature.LONELY, Nature.BOLD, Nature.RELAXED, Nature.TIMID, Nature.SERIOUS, Nature.MODEST, Nature.MILD, Nature.QUIET, Nature.BASHFUL, Nature.CALM, Nature.GENTLE, Nature.CAREFUL];
-      if (nature !== undefined && lowkeyNatures.indexOf(nature) > -1) {
-        return 1;
-      }
-      return 0;
+      case Species.UNOWN:
+      case Species.SHELLOS:
+      case Species.GASTRODON:
+      case Species.BASCULIN:
+      case Species.DEERLING:
+      case Species.SAWSBUCK:
+      case Species.FROAKIE:
+      case Species.FROGADIER:
+      case Species.SCATTERBUG:
+      case Species.SPEWPA:
+      case Species.VIVILLON:
+      case Species.FLABEBE:
+      case Species.FLOETTE:
+      case Species.FLORGES:
+      case Species.FURFROU:
+      case Species.PUMPKABOO:
+      case Species.GOURGEIST:
+      case Species.ORICORIO:
+      case Species.MAGEARNA:
+      case Species.ZARUDE:
+      case Species.SQUAWKABILLY:
+      case Species.TATSUGIRI:
+      case Species.PALDEA_TAUROS:
+        return Utils.randSeedInt(species.forms.length);
+      case Species.PIKACHU:
+        return Utils.randSeedInt(8);
+      case Species.EEVEE:
+        return Utils.randSeedInt(2);
+      case Species.GRENINJA:
+        return Utils.randSeedInt(2);
+      case Species.ZYGARDE:
+        return Utils.randSeedInt(3);
+      case Species.MINIOR:
+        return Utils.randSeedInt(6);
+      case Species.ALCREMIE:
+        return Utils.randSeedInt(9);
+      case Species.MEOWSTIC:
+      case Species.INDEEDEE:
+      case Species.BASCULEGION:
+      case Species.OINKOLOGNE:
+        return gender === Gender.FEMALE ? 1 : 0;
+      case Species.TOXTRICITY:
+        const lowkeyNatures = [Nature.LONELY, Nature.BOLD, Nature.RELAXED, Nature.TIMID, Nature.SERIOUS, Nature.MODEST, Nature.MILD, Nature.QUIET, Nature.BASHFUL, Nature.CALM, Nature.GENTLE, Nature.CAREFUL];
+        if (nature !== undefined && lowkeyNatures.indexOf(nature) > -1) {
+          return 1;
+        }
+        return 0;
     }
 
     if (ignoreArena) {
       switch (species.speciesId) {
-      case Species.BURMY:
-      case Species.WORMADAM:
-      case Species.ROTOM:
-      case Species.LYCANROC:
-        return Utils.randSeedInt(species.forms.length);
+        case Species.BURMY:
+        case Species.WORMADAM:
+        case Species.ROTOM:
+        case Species.LYCANROC:
+          return Utils.randSeedInt(species.forms.length);
       }
       return 0;
     }
@@ -1432,12 +1384,7 @@ export default class BattleScene extends SceneBase {
     if (this.money === undefined) {
       return;
     }
-<<<<<<< HEAD
     const formattedMoney = Utils.formatMoney(this.moneyFormat, this.money);
-=======
-    const formattedMoney =
-      this.moneyFormat === MoneyFormat.ABBREVIATED ? Utils.formatFancyLargeNumber(this.money, 3) : this.money.toLocaleString();
->>>>>>> 593b04a71a (added typeeffectiveness flyout mod)
     this.moneyText.setText(`₽${formattedMoney}`);
     this.fieldUI.moveAbove(this.moneyText, this.luckText);
     if (forceVisible) {
@@ -1547,7 +1494,7 @@ export default class BattleScene extends SceneBase {
 
   randomSpecies(waveIndex: integer, level: integer, fromArenaPool?: boolean, speciesFilter?: PokemonSpeciesFilter, filterAllEvolutions?: boolean): PokemonSpecies {
     if (fromArenaPool) {
-      return this.arena.randomSpecies(waveIndex, level,null , getPartyLuckValue(this.party));
+      return this.arena.randomSpecies(waveIndex, level, null, getPartyLuckValue(this.party));
     }
     const filteredSpecies = speciesFilter ? [...new Set(allSpecies.filter(s => s.isCatchable()).filter(speciesFilter).map(s => {
       if (!filterAllEvolutions) {
@@ -1726,116 +1673,116 @@ export default class BattleScene extends SceneBase {
 
   getBgmLoopPoint(bgmName: string): number {
     switch (bgmName) {
-    case "battle_kanto_champion":
-      return 13.950;
-    case "battle_johto_champion":
-      return 23.498;
-    case "battle_hoenn_champion":
-      return 11.328;
-    case "battle_sinnoh_champion":
-      return 12.235;
-    case "battle_champion_alder":
-      return 27.653;
-    case "battle_champion_iris":
-      return 10.145;
-    case "battle_elite":
-      return 17.730;
-    case "battle_final_encounter":
-      return 19.159;
-    case "battle_final":
-      return 16.453;
-    case "battle_kanto_gym":
-      return 13.857;
-    case "battle_johto_gym":
-      return 12.911;
-    case "battle_hoenn_gym":
-      return 12.379;
-    case "battle_sinnoh_gym":
-      return 13.122;
-    case "battle_unova_gym":
-      return 19.145;
-    case "battle_legendary_kanto": //XY Kanto Legendary Battle
-      return 32.966;
-    case "battle_legendary_raikou": //HGSS Raikou Battle
-      return 12.632;
-    case "battle_legendary_entei": //HGSS Entei Battle
-      return 2.905;
-    case "battle_legendary_suicune": //HGSS Suicune Battle
-      return 12.636;
-    case "battle_legendary_lugia": //HGSS Lugia Battle
-      return 19.770;
-    case "battle_legendary_ho_oh": //HGSS Ho-oh Battle
-      return 17.668;
-    case "battle_legendary_regis_g5": //B2W2 Legendary Titan Battle
-      return 49.500;
-    case "battle_legendary_regis_g6": //ORAS Legendary Titan Battle
-      return 21.130;
-    case "battle_legendary_gro_kyo": //ORAS Groudon & Kyogre Battle
-      return 10.547;
-    case "battle_legendary_rayquaza": //ORAS Rayquaza Battle
-      return 10.495;
-    case "battle_legendary_deoxys": //ORAS Deoxys Battle
-      return 13.333;
-    case "battle_legendary_lake_trio": //ORAS Lake Guardians Battle
-      return 16.887;
-    case "battle_legendary_sinnoh": //ORAS Sinnoh Legendary Battle
-      return 22.770;
-    case "battle_legendary_dia_pal": //ORAS Dialga & Palkia Battle
-      return 16.009;
-    case "battle_legendary_giratina": //ORAS Giratina Battle
-      return 10.451;
-    case "battle_legendary_arceus": //HGSS Arceus Battle
-      return 9.595;
-    case "battle_legendary_unova": //BW Unova Legendary Battle
-      return 13.855;
-    case "battle_legendary_kyurem": //BW Kyurem Battle
-      return 18.314;
-    case "battle_legendary_res_zek": //BW Reshiram & Zekrom Battle
-      return 18.329;
-    case "battle_legendary_xern_yvel": //XY Xerneas & Yveltal Battle
-      return 26.468;
-    case "battle_legendary_tapu": //SM Tapu Battle
-      return 0.000;
-    case "battle_legendary_sol_lun": //SM Solgaleo & Lunala Battle
-      return 6.525;
-    case "battle_legendary_ub": //SM Ultra Beast Battle
-      return 9.818;
-    case "battle_legendary_dusk_dawn": //USUM Dusk Mane & Dawn Wings Necrozma Battle
-      return 5.211;
-    case "battle_legendary_ultra_nec": //USUM Ultra Necrozma Battle
-      return 10.344;
-    case "battle_legendary_zac_zam": //SWSH Zacian & Zamazenta Battle
-      return 11.424;
-    case "battle_legendary_glas_spec": //SWSH Glastrier & Spectrier Battle
-      return 12.503;
-    case "battle_legendary_calyrex": //SWSH Calyrex Battle
-      return 50.641;
-    case "battle_legendary_birds_galar": //SWSH Galarian Legendary Birds Battle
-      return 0.175;
-    case "battle_legendary_ruinous": //SV Treasures of Ruin Battle
-      return 6.333;
-    case "battle_legendary_loyal_three": //SV Loyal Three Battle
-      return 6.500;
-    case "battle_legendary_ogerpon": //SV Ogerpon Battle
-      return 14.335;
-    case "battle_legendary_terapagos": //SV Terapagos Battle
-      return 24.377;
-    case "battle_legendary_pecharunt": //SV Pecharunt Battle
-      return 6.508;
-    case "battle_rival":
-      return 13.689;
-    case "battle_rival_2":
-      return 17.714;
-    case "battle_rival_3":
-      return 17.586;
-    case "battle_trainer":
-      return 13.686;
-    case "battle_wild":
-      return 12.703;
-    case "battle_wild_strong":
-      return 13.940;
-    case "end_summit":
-      return 30.025;
+      case "battle_kanto_champion":
+        return 13.950;
+      case "battle_johto_champion":
+        return 23.498;
+      case "battle_hoenn_champion":
+        return 11.328;
+      case "battle_sinnoh_champion":
+        return 12.235;
+      case "battle_champion_alder":
+        return 27.653;
+      case "battle_champion_iris":
+        return 10.145;
+      case "battle_elite":
+        return 17.730;
+      case "battle_final_encounter":
+        return 19.159;
+      case "battle_final":
+        return 16.453;
+      case "battle_kanto_gym":
+        return 13.857;
+      case "battle_johto_gym":
+        return 12.911;
+      case "battle_hoenn_gym":
+        return 12.379;
+      case "battle_sinnoh_gym":
+        return 13.122;
+      case "battle_unova_gym":
+        return 19.145;
+      case "battle_legendary_kanto": //XY Kanto Legendary Battle
+        return 32.966;
+      case "battle_legendary_raikou": //HGSS Raikou Battle
+        return 12.632;
+      case "battle_legendary_entei": //HGSS Entei Battle
+        return 2.905;
+      case "battle_legendary_suicune": //HGSS Suicune Battle
+        return 12.636;
+      case "battle_legendary_lugia": //HGSS Lugia Battle
+        return 19.770;
+      case "battle_legendary_ho_oh": //HGSS Ho-oh Battle
+        return 17.668;
+      case "battle_legendary_regis_g5": //B2W2 Legendary Titan Battle
+        return 49.500;
+      case "battle_legendary_regis_g6": //ORAS Legendary Titan Battle
+        return 21.130;
+      case "battle_legendary_gro_kyo": //ORAS Groudon & Kyogre Battle
+        return 10.547;
+      case "battle_legendary_rayquaza": //ORAS Rayquaza Battle
+        return 10.495;
+      case "battle_legendary_deoxys": //ORAS Deoxys Battle
+        return 13.333;
+      case "battle_legendary_lake_trio": //ORAS Lake Guardians Battle
+        return 16.887;
+      case "battle_legendary_sinnoh": //ORAS Sinnoh Legendary Battle
+        return 22.770;
+      case "battle_legendary_dia_pal": //ORAS Dialga & Palkia Battle
+        return 16.009;
+      case "battle_legendary_giratina": //ORAS Giratina Battle
+        return 10.451;
+      case "battle_legendary_arceus": //HGSS Arceus Battle
+        return 9.595;
+      case "battle_legendary_unova": //BW Unova Legendary Battle
+        return 13.855;
+      case "battle_legendary_kyurem": //BW Kyurem Battle
+        return 18.314;
+      case "battle_legendary_res_zek": //BW Reshiram & Zekrom Battle
+        return 18.329;
+      case "battle_legendary_xern_yvel": //XY Xerneas & Yveltal Battle
+        return 26.468;
+      case "battle_legendary_tapu": //SM Tapu Battle
+        return 0.000;
+      case "battle_legendary_sol_lun": //SM Solgaleo & Lunala Battle
+        return 6.525;
+      case "battle_legendary_ub": //SM Ultra Beast Battle
+        return 9.818;
+      case "battle_legendary_dusk_dawn": //USUM Dusk Mane & Dawn Wings Necrozma Battle
+        return 5.211;
+      case "battle_legendary_ultra_nec": //USUM Ultra Necrozma Battle
+        return 10.344;
+      case "battle_legendary_zac_zam": //SWSH Zacian & Zamazenta Battle
+        return 11.424;
+      case "battle_legendary_glas_spec": //SWSH Glastrier & Spectrier Battle
+        return 12.503;
+      case "battle_legendary_calyrex": //SWSH Calyrex Battle
+        return 50.641;
+      case "battle_legendary_birds_galar": //SWSH Galarian Legendary Birds Battle
+        return 0.175;
+      case "battle_legendary_ruinous": //SV Treasures of Ruin Battle
+        return 6.333;
+      case "battle_legendary_loyal_three": //SV Loyal Three Battle
+        return 6.500;
+      case "battle_legendary_ogerpon": //SV Ogerpon Battle
+        return 14.335;
+      case "battle_legendary_terapagos": //SV Terapagos Battle
+        return 24.377;
+      case "battle_legendary_pecharunt": //SV Pecharunt Battle
+        return 6.508;
+      case "battle_rival":
+        return 13.689;
+      case "battle_rival_2":
+        return 17.714;
+      case "battle_rival_3":
+        return 17.586;
+      case "battle_trainer":
+        return 13.686;
+      case "battle_wild":
+        return 12.703;
+      case "battle_wild_strong":
+        return 13.940;
+      case "end_summit":
+        return 30.025;
     }
 
     return 0;
@@ -2107,11 +2054,7 @@ export default class BattleScene extends SceneBase {
         const newItemModifier = itemModifier.clone() as PokemonHeldItemModifier;
         newItemModifier.pokemonId = target.id;
         const matchingModifier = target.scene.findModifier(m => m instanceof PokemonHeldItemModifier
-<<<<<<< HEAD
-                    && (m as PokemonHeldItemModifier).matchType(itemModifier) && m.pokemonId === target.id, target.isPlayer()) as PokemonHeldItemModifier;
-=======
           && (m as PokemonHeldItemModifier).matchType(itemModifier) && m.pokemonId === target.id, target.isPlayer()) as PokemonHeldItemModifier;
->>>>>>> 593b04a71a (added typeeffectiveness flyout mod)
         let removeOld = true;
         if (matchingModifier) {
           const maxStackCount = matchingModifier.getMaxStackCount(target.scene);
@@ -2215,13 +2158,8 @@ export default class BattleScene extends SceneBase {
   }
 
   /**
-<<<<<<< HEAD
     * Removes all modifiers from enemy of PersistentModifier type
     */
-=======
-  * Removes all modifiers from enemy of PersistentModifier type
-  */
->>>>>>> 593b04a71a (added typeeffectiveness flyout mod)
   clearEnemyModifiers(): void {
     const modifiersToRemove = this.enemyModifiers.filter(m => m instanceof PersistentModifier);
     for (const m of modifiersToRemove) {
@@ -2231,13 +2169,8 @@ export default class BattleScene extends SceneBase {
   }
 
   /**
-<<<<<<< HEAD
     * Removes all modifiers from enemy of PokemonHeldItemModifier type
     */
-=======
-  * Removes all modifiers from enemy of PokemonHeldItemModifier type
-  */
->>>>>>> 593b04a71a (added typeeffectiveness flyout mod)
   clearEnemyHeldItemModifiers(): void {
     const modifiersToRemove = this.enemyModifiers.filter(m => m instanceof PokemonHeldItemModifier);
     for (const m of modifiersToRemove) {
