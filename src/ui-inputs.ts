@@ -106,7 +106,7 @@ export class UiInputs {
       [Button.CYCLE_SHINY]:     () => undefined,
       [Button.CYCLE_FORM]:      () => undefined,
       [Button.CYCLE_GENDER]:    () => undefined,
-      [Button.CYCLE_ABILITY]:   () => undefined,
+      [Button.CYCLE_ABILITY]:   () => this.buttonTypeEffectiveness(false),
       [Button.CYCLE_NATURE]:    () => undefined,
       [Button.V]:               () => this.buttonInfo(false),
       [Button.SPEED_UP]:        () => undefined,
@@ -151,6 +151,16 @@ export class UiInputs {
     }
   }
 
+  buttonTypeEffectiveness(pressed: boolean = true): void {
+    if (!this.scene.showTypeEffectivenessFlyout) {
+      return;
+    }
+
+    for (const p of this.scene.getField().filter(p => p?.isActive(true))) {
+      p.toggleTypeEffectivenessFlyout(pressed);
+    }
+  }
+
   buttonMenu(): void {
     if (this.scene.disableMenu) {
       return;
@@ -184,6 +194,8 @@ export class UiInputs {
       this.scene.ui.processInput(button);
     } else if (button === Button.V) {
       this.buttonInfo(true);
+    } else if (button === Button.CYCLE_ABILITY) {
+      this.buttonTypeEffectiveness(true);
     }
   }
 

@@ -41,6 +41,15 @@ export enum BattleSceneEventType {
    * @see {@linkcode NewArenaEvent}
    */
   NEW_ARENA = "onNewArena",
+
+  /**
+   * Triggers when the Summon & PostSummon Phase begins
+   * Triggering in both Phases is a Workaround, to ensure the Type Effectiveness Flyout is updated,
+   * because the Summon & PostSummon Phases are not always started,
+   * but always one of them
+   * @see {@linkcode PokemonSummonedEvent}
+   */
+  POKEMON_SUMMONED = "onPokemonSummoned",
 }
 
 /**
@@ -128,5 +137,14 @@ export class TurnEndEvent extends Event {
 export class NewArenaEvent extends Event {
   constructor() {
     super(BattleSceneEventType.NEW_ARENA);
+  }
+}
+/**
+ * Container class for {@linkcode BattleSceneEventType.POKEMON_SUMMONED} events
+ * @extends Event
+*/
+export class PokemonSummonedEvent extends Event {
+  constructor() {
+    super(BattleSceneEventType.POKEMON_SUMMONED);
   }
 }
