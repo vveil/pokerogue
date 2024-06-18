@@ -1670,6 +1670,10 @@ export default abstract class Pokemon extends Phaser.GameObjects.Container {
     this.battleInfo.toggleFlyout(visible);
   }
 
+  toggleTypeEffectivenessFlyout(visible: boolean): void {
+    this.battleInfo.flyoutTypeEffectivenessMenu?.toggleTypeEffectivenessFlyout(visible);
+  }
+
   addExp(exp: integer) {
     const maxExpLevel = this.scene.getMaxExpLevel();
     const initialExp = this.exp;

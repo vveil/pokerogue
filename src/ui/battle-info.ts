@@ -10,6 +10,7 @@ import { getVariantTint } from "#app/data/variant";
 import { BattleStat } from "#app/data/battle-stat";
 import BattleFlyout from "./battle-flyout";
 import { WindowVariant, addWindow } from "./ui-theme";
+import TypeEffectivenessFlyout from "./type-effectiveness-flyout";
 
 const battleStatOrder = [ BattleStat.ATK, BattleStat.DEF, BattleStat.SPATK, BattleStat.SPDEF, BattleStat.ACC, BattleStat.EVA, BattleStat.SPD ];
 
@@ -68,6 +69,7 @@ export default class BattleInfo extends Phaser.GameObjects.Container {
   private statNumbers: Phaser.GameObjects.Sprite[];
 
   public flyoutMenu?: BattleFlyout;
+  public flyoutTypeEffectivenessMenu: TypeEffectivenessFlyout;
 
   constructor(scene: Phaser.Scene, x: number, y: number, player: boolean) {
     super(scene, x, y);
@@ -242,6 +244,9 @@ export default class BattleInfo extends Phaser.GameObjects.Container {
       this.add(this.flyoutMenu);
 
       this.moveBelow<Phaser.GameObjects.GameObject>(this.flyoutMenu, this.box);
+      this.flyoutTypeEffectivenessMenu = new TypeEffectivenessFlyout(this.scene, this.player);
+      this.add(this.flyoutTypeEffectivenessMenu);
+      this.moveBelow<Phaser.GameObjects.GameObject>(this.flyoutTypeEffectivenessMenu, this.box);
     }
 
     this.type1Icon = this.scene.add.sprite(player ? -139 : -15, player ? -17 : -15.5, `pbinfo_${player ? "player" : "enemy"}_type1`);
@@ -281,6 +286,7 @@ export default class BattleInfo extends Phaser.GameObjects.Container {
     this.box.name = pokemon.name;
 
     this.flyoutMenu?.initInfo(pokemon);
+    this.flyoutTypeEffectivenessMenu?.initInfo(pokemon);
 
     this.genderText.setText(getGenderSymbol(pokemon.gender));
     this.genderText.setColor(getGenderColor(pokemon.gender));

@@ -53,7 +53,7 @@ import i18next from "./plugins/i18n";
 import * as Overrides from "./overrides";
 import { TextStyle, addTextObject } from "./ui/text";
 import { Type } from "./data/type";
-import { BerryUsedEvent, EncounterPhaseEvent, MoveUsedEvent, TurnEndEvent, TurnInitEvent } from "./events/battle-scene";
+import { BerryUsedEvent, EncounterPhaseEvent, MoveUsedEvent, TurnEndEvent, TurnInitEvent, PokemonSummonedEvent } from "./events/battle-scene";
 import { Abilities } from "#enums/abilities";
 import { ArenaTagType } from "#enums/arena-tag-type";
 import { BattleSpec } from "#enums/battle-spec";
@@ -1208,6 +1208,8 @@ export class PostSummonPhase extends PokemonPhase {
   start() {
     super.start();
 
+    /** Triggeres the {@linkcode BattleSceneEventType.POKEMON_SUMMONED} for the Type Effectiveness UI */
+    this.scene.eventTarget.dispatchEvent(new PokemonSummonedEvent());
     const pokemon = this.getPokemon();
 
     if (pokemon.status?.effect === StatusEffect.TOXIC) {
@@ -1365,6 +1367,8 @@ export class SummonPhase extends PartyMemberPokemonPhase {
   start() {
     super.start();
 
+    /** Triggeres the {@linkcode BattleSceneEventType.POKEMON_SUMMONED} for the Type Effectiveness UI */
+    this.scene.eventTarget.dispatchEvent(new PokemonSummonedEvent());
     this.preSummon();
   }
 
