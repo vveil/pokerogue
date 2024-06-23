@@ -3384,7 +3384,7 @@ export class StatChangePhase extends PokemonPhase {
       } else {
         statsFragment = getBattleStatName(relLevelStats[0]);
       }
-      messages.push(getPokemonMessage(this.getPokemon(), `'s ${statsFragment} ${getBattleStatLevelChangeDescription(Math.abs(parseInt(rl)), levels >= 1)}!`));
+      messages.push(getBattleStatLevelChangeDescription(getPokemonNameWithAffix(this.getPokemon()), statsFragment, Math.abs(parseInt(rl)), levels >= 1));
     });
 
     return messages;
